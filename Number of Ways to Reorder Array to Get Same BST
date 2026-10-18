@@ -1,0 +1,22 @@
+///
+from math import comb
+class Solution:
+    def numOfWays(self, nums: list[int]) -> int:
+        MOD = 10**9 + 7
+
+        def ways(ary):
+            if len(ary) <= 2:
+                return 1
+
+            root = ary[0]
+            left = [x for x in ary if x < root]
+            right = [x for x in ary if x > root]\
+
+            # choose positions for the left elements among the n-1 slots, counts every valid ordering,
+            # and that includes the original array. The problem only wants the other orderings.
+            return comb(len(ary)-1, len(left)) * ways(left) * ways(right) % MOD
+        
+        return (ways(nums)-1) % MOD
+
+##O(n²) time, because each level partitions the array and the tree can be a chain. Space is O(n²) in the worst case for the sublists.
+
