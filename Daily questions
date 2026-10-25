@@ -15,4 +15,35 @@ class Solution {
 
 
 
+##################################################################
+#1254. Number of Closed Islands
+class Solution:
+    def closedIsland(self, grid: list[list[int]]) -> int:
+        rows, cols = len(grid), len(grid[0])
 
+        def sink(r, c):
+            # turn this whole island into water
+            stack = [(r, c)]
+            grid[r][c] = 1
+            while stack:
+                i, j = stack.pop()
+                for ni, nj in ((i+1, j), (i-1, j), (i, j+1), (i, j-1)):
+                    if 0 <= ni < rows and 0 <= nj < cols and grid[ni][nj] == 0:
+                        grid[ni][nj] = 1
+                        stack.append((ni, nj))
+
+        # 1. remove islands that touch the border
+        for r in range(rows):
+            for c in range(cols):
+                if (r in (0, rows - 1) or c in (0, cols - 1)) and grid[r][c] == 0:
+                    sink(r, c)
+
+        # 2. every remaining island is closed
+        count = 0
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 0:
+                    count += 1
+                    sink(r, c)
+
+        return count
