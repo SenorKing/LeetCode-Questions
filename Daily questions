@@ -52,6 +52,7 @@ class Solution:
 #You are given an integer array nums. In one move, you may increase the value of any single element nums[i] by 1.
 #Return the minimum total number of moves required so that all elements in nums become equal.
 
+### JAVA
 int max = 0;
         for (int x : nums) {
             max = Math.max(max, x);
@@ -62,6 +63,12 @@ int max = 0;
         }
         return moves;
     }
+
+## PYTHON
+class Solution:
+    def minMoves(self, nums: List[int]) -> int:
+        m = max(nums)
+        return sum(m - x for x in nums)
 
 ###########################################################
 
